@@ -1,0 +1,54 @@
+@font-face {
+    font-family:DS-DIGI;
+    src: url("../font/DS-DIGI.TTF");
+}
+.data-amount-bg{
+    margin-top: 1rem;
+}
+.data-amount-bg div{
+    display: inline-block;
+    position: absolute;
+}
+.data-amount-bg div span{
+    font-family:DS-DIGI;
+    font-size:81px;
+    color: #ffd905;
+}
+.data-amount-bg .data-amount-bg-1{
+    left: 17.2rem;
+}
+.data-amount-bg .data-amount-bg-2{
+    left: 20.6rem;
+}
+.data-amount-bg .data-amount-bg-3{
+    left: 24.0rem;
+}
+.data-amount-bg .data-amount-bg-4{
+    left: 27.5rem;
+}
+.data-amount-bg .data-amount-bg-5{
+    left: 30.9rem;
+}
+.data-amount-bg .data-amount-bg-6{
+    left: 35.1rem;
+}
+.data-amount-bg .data-amount-bg-7{
+    left: 38.5rem;
+}
+
+.data-amount-bg .data-amount-int{
+    font-family:DS-DIGI;
+    font-size:81px;
+    color: #ffd905;
+    position: absolute;
+    left:16.3rem;
+    letter-spacing: 16px
+}
+.data-amount-bg .data-amount-float{
+    font-family:DS-DIGI;
+    font-size:81px;
+    color: #ffd905;
+    position: absolute;
+    left:33rem;
+    letter-spacing: 18px
+}

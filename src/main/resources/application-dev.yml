@@ -1,0 +1,65 @@
+server:
+  port: 8882
+  servlet:
+    context-path: /
+    session:
+      timeout: 300m
+spring:
+  application:
+    name: shm8882
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      datasource:
+        master:
+            username: root
+            password: 123456
+            driver-class-name: com.mysql.jdbc.Driver
+            url: jdbc:mysql://192.168.168.123:3306/shm?characterEncoding=UTF-8&zeroDateTimeBehavior=round&useSSL=false
+            initialSize: 5
+            minIdle: 5
+            maxActive: 20
+        slave_1:
+            username: sjcy
+            password: netmarch
+            driver-class-name: oracle.jdbc.driver.OracleDriver
+            url: jdbc:oracle:thin:@172.16.0.139:1521:orcl
+            initialSize: 5
+            minIdle: 5
+            maxActive: 20
+        slave_2:
+            username: root
+            password: netmarch
+            driver-class-name: com.mysql.jdbc.Driver
+            url: jdbc:mysql://172.16.0.188:3306/videocloud?characterEncoding=UTF-8&zeroDateTimeBehavior=round&useSSL=false
+            initialSize: 5
+            minIdle: 5
+            maxActive: 20
+        slave_3:
+            username: root
+            password: netmarch
+            driver-class-name: com.mysql.jdbc.Driver
+            url: jdbc:mysql://172.16.0.188:3306/shm?characterEncoding=UTF-8&zeroDateTimeBehavior=round&useSSL=false
+            initialSize: 5
+            minIdle: 5
+            maxActive: 20
+        #......省略
+        #以上会配置一个默认库master，一个组slave下有两个子库slave_1,slave_2
+
+  ##########################  文件路径配置  ##########################
+project-url:
+  path: D:/netintech/shmUpload/
+  url: http://localhost:8881
+  smsUrl: http://localhost:8092/temp/smsTest
+  addressUrl: http://192.168.168.104:8092/temp/fbdzTest
+  interfaceUrl: http://localhost:8004
+  rzhyUrl:
+  ##########################  日志路径配置  ##########################
+log:
+  level: info
+  path: d:/log/demoLogs
+
+cas:
+  serverName: http://127.0.0.1:8082
+  casServerLoginUrl: http://tyyh.szh.js:9080/cas/login
+  casServerUrlPrefix: http://tyyh.szh.js:9080/cas

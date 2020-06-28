@@ -1,0 +1,14 @@
+<div class="B12_middle_page">
+    <span class="B12_middle_page_span" th:text="*{'共'+recordCount}+'条记录'"></span>
+    <span class="B12_middle_page_span" th:onclick="'selectPage(1,'+*{totalPage}+')'">首页</span>
+    <span class="B12_middle_page_span3" th:onclick="'selectPage('+*{currentPage - 1}+ ','+*{totalPage}+')'">上一页</span>
+    <span class="B12_middle_page_span" th:text="*{currentPage}+'/'+ *{totalPage} + '页'"></span>
+    <span class="B12_middle_page_span3" th:onclick="'selectPage('+*{currentPage + 1}+ ','+*{totalPage}+')'">下一页</span>
+    <span class="B12_middle_page_span6" th:onclick="'selectPage('+*{totalPage}+')'">末页</span>
+    <span class="B12_middle_page_span7">跳转到</span>
+    <input type="text" class="B12_middle_page_input">
+    <span class="B12_middle_page_span8">页</span>
+    <span class="B12_middle_page_span3" onclick="gotoPage(this)">go</span>
+</div>
+<input type="hidden" id="currentPage" name="currentPage" th:value="*{currentPage}"/>
+<script th:src="@{/js/mainjs.js}"></script>

@@ -1,0 +1,29 @@
+/* 本文件为公用按钮等样式 */
+
+/* 按钮初始化 */
+.G-button{
+    display: inline-block;
+    text-align: center;
+    border-radius: .2em;
+    /* padding: .6em 2em; */
+    width: 6.5em;
+    text-align: center;
+    height:2.11em;
+    line-height:2.11em;
+    cursor: pointer;
+}
+/* 按钮样式 */
+.G-button-blue{
+    background-color: #6595ed;
+    color:#fff;
+}
+.G-button-empty{
+    background-color: #fff;
+    border:1px solid #7eb1eb;
+    color:#7eb1eb;
+}
+/* 按钮hover */
+.G-button.G-button-blue:hover{
+    background-color: #779fe9; 
+}
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netintech.fixedassets.system.mapper.ShmActionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.netintech.fixedassets.system.entity.ShmAction">
+        <id column="ID" property="id" />
+        <result column="menu_id" property="menuId" />
+        <result column="name" property="name" />
+        <result column="url" property="url" />
+        <result column="code" property="code" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, menu_id, name, url, code
+    </sql>
+
+    <!-- 角色资源树 -->
+    <select id="treeShmRoleList" resultType="com.netintech.fixedassets.system.dto.ShmActionDto" parameterType="int">
+        select DISTINCT b.ID,b. menu_id,b. name,b. url,b. code,b.parentId,(select a.id from shm_action a LEFT JOIN shm_role_r_action ra on ra.action_id=a.id where ra.role_id=#{roleId} and a.ID=b.id)  as checkRole from
+        (select a.*,(SELECT id from shm_action a2 where a2.menu_id=m.parent_menu)  as parentId from shm_action a
+        LEFT JOIN shm_menu m ON a.menu_id=m.id
+        where a.code='9999'
+        UNION
+        select a.*,(SELECT id from shm_action a2 where a2.menu_id=a.menu_id and a2.code='9999')  as parentId from shm_action a
+        LEFT JOIN shm_menu m ON a.menu_id=m.id
+        where a.code!='9999') b
+        LEFT JOIN shm_role_r_action ra on ra.action_id=b.id
+    </select>
+
+</mapper>

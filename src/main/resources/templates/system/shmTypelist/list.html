@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统管理-字典管理</title>
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.4/layui/css/layui.css}">
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <script th:src="@{/js/main15.js}"></script>
+    <link rel="stylesheet" th:href="@{/font/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/css/config15.css}">
+    <link rel="stylesheet" th:href="@{/css/style15.css}">
+</head>
+<body>
+    <div class="s-module-name">
+        <i class="iconfont L521_icolor">&#xe640;</i>
+        <span>系统管理</span>
+        <img th:src="@{/images/icon-title-right.png}">
+        <a th:href="@{/shmTypelist/getShmTypelistList}"><span>字典管理</span></a>
+    </div>
+    <div class="s-search-row">
+        <form class="layui-form">
+            <div class="s-search-item">
+                <input type="text" id="typeName" class="s-input-def" placeholder="请输入字典名称" autocomplete="off">
+            </div>
+            <div class="s-search-item s-search-send">
+                <a class="s-filter-btn s-btn">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="s-list-tree">
+        <div class="s-list">
+            <div class="s-list-action">
+                <a class="s-add-type s-btn" auth:check="dicAdd">新增</a>
+            </div>
+            <div id="s_type" class="s-list-table">
+                <table class="layui-hide" id="s_typeList" lay-filter="s_typeList"></table>
+            </div>
+            <div class="s-tree-box">
+                <div id="s_typeList_tree" class="s-tree-content"></div>
+            </div>
+        </div>
+    </div>
+    <div id="s-alert-data" class="layui-form" lay-filter="add-type" style="display:none;">
+        <table>
+            <tr>
+                <td class="s-table-key" style="width:108px;">父级字典 :</td>
+                <td class="s-table-val">
+                    <select name="add-type-code" lay-filter="add-type-code">
+                        <option value="-1">请选择</option>
+                        <option th:each="dept:${ltShmTypelist}" th:value="${dept.code}" th:text="${dept.typeName}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="s-table-key" style="width:108px;"><i>*</i>字典名称 :</td>
+                <td class="s-table-val"><input type="text" id="addTypeName" class="s-input-def" autocomplete="off" maxlength="50" onKeyDown="if(this.value.length>50){event.returnValue=false}"></td>
+            </tr>
+            <tr class="s-ifShow-row">
+                <td class="s-table-key" style="width:108px;"><i>*</i>字典编码 :</td>
+                <td class="s-table-val"><input type="text" id="addTypeCode" class="s-input-def s-input-notAllowed" autocomplete="off" disabled></td>
+            </tr>
+            <tr>
+                <td class="s-table-key s-td-remark" style="width:108px;">字典描述 :</td>
+                <td class="s-table-val"><textarea id="addTypeDescription" class="s-textarea" rows="3" maxlength="200" onKeyDown="if(this.value.length>200){event.returnValue=false}"></textarea></td>
+            </tr>
+            <tr>
+                <td class="s-table-key" style="width:108px;"><i>*</i>状态 :</td>
+                <td class="s-table-val">
+                    <input type="radio" class="add-state" name="add-state" lay-filter="add-state" value="1" title="启用" checked>
+                    <input type="radio" class="add-state" name="add-state" lay-filter="add-state" value="0" title="停用">
+                </td>
+            </tr>
+        </table>
+        <div class="s-alert-action">
+            <a class="s-alert-send s-btn">提交</a>
+            <a class="s-alert-close s-btn s-btn-white">取消</a>
+        </div>
+    </div>
+</body>
+<!--用户操作列权限设置 Start-->
+<script type="text/html" id="typeOperate">
+    <a class="s-btn-table" data-tips="编辑" lay-event="edit" auth:check="dicEdit"><i class="iconfont">&#xe641;</i></a>
+    <a class="s-btn-table" data-tips="删除" lay-event="del" auth:check="dicDel"><i class="iconfont">&#xe63e;</i></a>
+</script>
+<!--用户操作列权限设置 End-->
+<script th:src="@{/web/system/typelist/typelist.js}"></script>
+</html>

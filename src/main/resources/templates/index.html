@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社会面-首页</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/font/iconfont.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/style15_1.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/style15_2.css}">
+    <script th:src="@{/js/jquery-1.8.2.min.js}"></script>
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <script th:src="@{/js/echarts-liquidfill.js}"></script>
+    <script th:src="@{/font/iconfont.js}"></script>
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <script th:src="@{/js/main15.js}"></script>
+    <script th:src="@{/web/index.js}"></script>
+    <style>
+        /*新首页 更多弹窗*/
+        .index-new-more {
+            background-color: transparent !important;
+        }
+    </style>
+</head>
+<body>
+<div id="header" class="clear">
+    <div class="user-info">
+        <ul class="clear">
+            <li><img src="/images/newIndex/icon-user.png"></li>
+            <li class="username-time">
+                <p>欢迎您! <span th:text="${user.name}">莫里索</span></p>
+                <p id="showTime">2019-06-10 10:10:02</p>
+            </li>
+        </ul>
+    </div>
+    <nav class="clear">
+        <div class="nav-item" th:each="shmMenuDto : ${ltShmMenuDto}">
+            <a href="javascript:void(0);" onclick="test(this.getAttribute('data-id'),this.getAttribute('data-url'))"
+               th:data-url="${shmMenuDto.url}" th:data-id="${shmMenuDto.id}" th:title="${shmMenuDto.menu}"><i
+                    class="iconfont" th:utext="${shmMenuDto.menuicon}">&#xe610;</i></a>
+            <div class="nav-child" th:if="${shmMenuDto.sonMenus} !=null">
+                <div class="top-tr"><img src="/images/newIndex/icon-nav-chaild.png"></div>
+                <ul>
+                    <!--                        <li class="nav-child-title" th:text="${shmMenuDto.menu}">数据管理</li>-->
+                    <li th:each="shmMenu : ${shmMenuDto.sonMenus}"><a href="javascript:void(0);"
+                                                                      onclick="test(this.getAttribute('data-id'),this.getAttribute('data-url'))"
+                                                                      th:data-url="${shmMenu.url}"
+                                                                      th:data-id="${shmMenuDto.id}"><i class="iconfont"
+                                                                                                       th:utext="${shmMenuDto.menuicon}"></i><span
+                            th:text="${shmMenu.menu}">数据上报</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="nav-item msg-item" th:title="消息">
+            <a id="msg" onclick="test('9','/shmMessage/getShmMessageList')"><i class="iconfont">&#xe634;</i><span
+                    th:if="${messageCount>0}" th:text="${messageCount}">0</span></a>
+        </div>
+        <div class="nav-item logout-item" th:title="退出">
+            <a><i class="iconfont" t th:onclick="'javascript:logout()'">&#xe715;</i></a>
+        </div>
+    </nav>
+</div>
+<!--    <div>-->
+<!--        <iframe src="home" frameborder="0" name="indexContentIframe" id="indexContentIframe"></iframe>-->
+<!--        &lt;!&ndash; <iframe src="home.html" frameborder="0"></iframe> &ndash;&gt;-->
+<!--    </div>-->
+<!--    <div th:replace="common/bottom::pages"></div>-->
+<div id="home" class="clear">
+    <div class="home-item" style="width:25%;">
+        <div class="home-content unit-sort">
+            <div class="home-item-title">
+                <a id="moreDw" style="cursor:pointer;text-decoration:underline;"><img
+                        src="/images/newIndex/title-dwpm.png"></a>
+                <span>万条/年</span>
+                <!--                    <span style="right:290px;width: 40px"><a id="moreDw" style="cursor:pointer;text-decoration:underline;">更多</a></span>-->
+            </div>
+            <ul id="fir3">
+            </ul>
+            <!--                <ul th:each="uranks:${unitRank}">-->
+            <!--                    <li>-->
+            <!--                        <span class="top-icon bg-0ed1af" th:text="'TOP '+${uranksStat.count}">TOP </span>-->
+            <!--                        <p><span class="unit-name" th:text="${uranks.name}">长江派出所</span><span class="unit-amount" th:text="${uranks.sum}/10000">158.36</span></p>-->
+            <!--                    </li>-->
+
+            <!--                </ul>-->
+        </div>
+        <div class="home-content check-sort">
+            <div class="home-item-title">
+                <a id="moreRzgy" style="cursor:pointer;text-decoration:underline;"><img
+                        src="/images/newIndex/title-rzhysl_1.png"></a>
+                <span>万条/年</span>
+                <!--                    <span style="right:290px;width: 40px"><a id="moreRzgy" style="cursor:pointer;text-decoration:underline;">更多</a></span>-->
+            </div>
+            <div class="liquidfill-row clear">
+                <div class="liquidfill-item">
+                    <div class="liquidfill-item-border">
+                        <div id="year_liquidfill"></div>
+                    </div>
+                    <p>当年</p>
+                </div>
+                <div class="liquidfill-item">
+                    <div class="liquidfill-item-border">
+                        <div id="quarter_liquidfill"></div>
+                    </div>
+                    <p>当季</p>
+                </div>
+                <div class="liquidfill-item">
+                    <div class="liquidfill-item-border">
+                        <div id="mouth_liquidfill"></div>
+                    </div>
+                    <p>当月</p>
+                </div>
+            </div>
+            <ul id="fir">
+
+            </ul>
+        </div>
+    </div>
+    <div class="home-item" style="width:50%;padding:0 10px">
+        <div class="data-main">
+            <div class="data-amount-type">
+                <img src="/images/newIndex/title-dataAll.png">
+                <div class="data-amount-bg">
+                    <div class="data-amount-bg-1"><span></span></div>
+                    <div class="data-amount-bg-2"><span></span></div>
+                    <div class="data-amount-bg-3"><span></span></div>
+                    <div class="data-amount-bg-4"><span></span></div>
+                    <div class="data-amount-bg-5"><span></span></div>
+                    <div class="data-amount-bg-6"><span></span></div>
+                    <div class="data-amount-bg-7"><span></span></div>
+                    <img src="images/newIndex/bg-title-dataAll.png">
+                </div>
+            </div>
+            <div class="qiu-block-row">
+                <div class="data-all-year"><span></span><br>(万条/年)</div>
+                <div class="data-all-mouth"><span></span><br>(万条/月)</div>
+                <div class="data-all-day"><span></span><br>(万条/日)</div>
+            </div>
+        </div>
+        <div class="home-content near-data">
+            <div class="home-item-title">
+                <img src="/images/newIndex/title-30day_1.png">
+                <span style="right:-280px;">万条/年</span>
+            </div>
+            <div id="nearData" class="near-data-chart"></div>
+        </div>
+    </div>
+    <div class="home-item" style="width:25%;padding-right:15px;">
+        <div class="home-content data-sort">
+            <div class="home-item-title">
+                <a id="moreSJL" style="cursor:pointer;text-decoration:underline;"><img
+                        src="/images/newIndex/title-sjlpm.png"></a>
+                <span>万条</span>
+                <!--                    <span style="right:290px;width: 40px"><a id="moreSJL" style="cursor:pointer;text-decoration:underline;">更多</a></span>-->
+            </div>
+            <ul id="fir2">
+            </ul>
+        </div>
+        <div class="home-content other-sort">
+            <div class="home-item-title">
+                <a id="moreWb" style="cursor:pointer;text-decoration:underline;"><img
+                        src="/images/newIndex/title-wbsjl.png"></a>
+                <span>万条</span>
+                <!--                    <span><a id="moreWb" style="cursor:pointer;text-decoration:underline;">更多</a></span>-->
+            </div>
+            <div id="otherData"></div>
+        </div>
+        <div class="home-content rule-sort">
+            <div class="home-item-title">
+                <img
+                        src="/images/newIndex/title-sjzbgz_1.png">
+<!--                <a href=" javascript:void(0);" onclick="test('35','/rule/toRuleList')" style="color: white"-->
+<!--                   onMouseOut="this.style.color='white'" onMouseOver="this.style.color='rgb(63, 255, 244)'"></a>-->
+                <span><a href=" javascript:void(0);" onclick="test('35','/rule/toRuleList')" style="color: white"
+                         onMouseOut="this.style.color='white'" onMouseOver="this.style.color='rgb(63, 255, 244)'">更多</a></span>
+            </div>
+            <div class="rule-sort-row clear">
+                <ul class="fl">
+                    <li><span>1</span>
+                        <p>数据判重</p></li>
+                    <li><span>2</span>
+                        <p>身份证有效性</p></li>
+                    <li><span>3</span>
+                        <p>身份证与姓名真实性</p></li>
+                    <li><span>4</span>
+                        <p>手机号码校验</p></li>
+                    <li><span>5</span>
+                        <p>车牌用途校验</p></li>
+                </ul>
+                <ul class="fr">
+                    <li><span>6</span>
+                        <p>汽车会员校验</p></li>
+                    <li><span>7</span>
+                        <p>匝道过车校验</p></li>
+                    <li><span>8</span>
+                        <p>科室年龄校验</p></li>
+                    <li><span>9</span>
+                        <p>匝道过车校验</p></li>
+                    <li><span>10</span>
+                        <p>挂号科室数量</p></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/home.js}"></script>
+<script>
+    if(2!=[[${roleId}]]&&6!=[[${roleId}]]){
+        test([[${firstId}]],'[[${firstUrl}]]');
+    }
+    $(document).ready(function () {
+        main15.index();
+    });
+
+    function test(id, url) {
+        top.location.href = "main1?menuId=" + id + "&url=" + url;
+    }
+
+    function callParentHide() {
+        $(".L421_popup_black").hide()
+        $(".L421_popup").hide()
+    }
+
+    function ppShow() {
+        $(".L421_popup_black").show()
+        $(".L421_popup").show()
+    }
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        var tips;
+        $("body").on('mouseenter', '.h-icon i', function () {
+            tips = layer.tips($(this).data('tips'), $(this), {
+                tips: [1, '#333333']
+            });
+        }).on('mouseleave', '.h-icon i', function () {
+            layer.close(tips)
+        });
+    })
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        var tips2;
+        $(".data-sort ul li p .unit-name").on('mouseenter', function () {
+            var data = $(this).text()
+            if (data.length > 14) {
+                tips2 = layer.tips(data, $(this), {
+                    tips: [3, '#051c60'],
+                    area: ['auto', 'auto'],
+                });
+            }
+        }).on('mouseleave', function () {
+            layer.close(tips2)
+        });
+
+        function open(url, area) {
+            var moreLayer = layer.open({
+                type: 2,
+                title: false,
+                skin: 'index-new-more',
+                closeBtn: 0, //不显示关闭按钮
+                area: area,
+                anim: 2,
+                content: [url, 'no'], //iframe的url，no代表不显示滚动条
+            });
+        };
+
+        $("#moreWb").on('click', function () {
+            open('/toMoreExternal', ['1100px', '720px'])
+        })
+        $("#moreDw").on('click', function () {
+            open('/toDwExternal', ['1100px', '720px'])
+        })
+        $("#moreSJL").on('click', function () {
+            open('/toSJLExternal', ['1100px', '720px'])
+        })
+        $("#moreRzgy").on('click', function () {
+            open('/toRZHYExternal', ['1100px', '720px'])
+        })
+    })
+</script>
+<script>
+    //当月数据量
+    var date = new Date(), days = [];
+    var d = new Date(date.getFullYear(), (date.getMonth() + 1), 0);
+    var m = d.getDate();
+    var day = date.toLocaleDateString().split("/")[2]
+    for (var i = 1; i <= m; i++) {
+        days.push(i);
+    }
+
+
+</script>
+</html>

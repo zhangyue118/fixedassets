@@ -1,0 +1,133 @@
+@charset "UTF-8";
+.T27_wrapper {
+  width: 100%;
+  height: 100%;
+  min-width: 1280px;
+  min-height: 668px;
+  padding: 0.5em;
+  box-sizing: border-box;
+  overflow: hidden; }
+  .T27_wrapper .table1_27 {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 2.5em;
+    font-family: '微软雅黑';
+    border-collapse: collapse;
+    border: 1px #dce0ed solid;
+    color: #000; }
+    .T27_wrapper .table1_27 thead {
+      height: 2.5em; }
+      .T27_wrapper .table1_27 thead th {
+        text-align: center;
+        font-size: 0.8em;
+        background-color: #e5e8f2;
+        border: 1px solid #dce0ed;
+        height: 2.5em; }
+      .T27_wrapper .table1_27 thead .T127_c1 {
+        width: 3.9%;
+        text-align: center; }
+      .T27_wrapper .table1_27 thead .T127_c2 {
+        width: 7.79%;
+        text-align: center; }
+      .T27_wrapper .table1_27 thead .T127_c3 {
+        width: 35.3%; }
+      .T27_wrapper .table1_27 thead .T127_c4 {
+        width: 42%; }
+  .T27_wrapper .T27_inside {
+    width: 100%;
+    height: 96.5%;
+    overflow-y: auto;
+    position: relative; }
+    .T27_wrapper .T27_inside .table2_27 {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: '微软雅黑';
+      border-collapse: collapse;
+      border: 1px #dce0ed solid;
+      color: #000; }
+      .T27_wrapper .T27_inside .table2_27 thead {
+        height: 2.45em; }
+        .T27_wrapper .T27_inside .table2_27 thead th {
+          font-size: 0.8em;
+          border: 1px solid #dce0ed;
+          height: 2.45em; }
+        .T27_wrapper .T27_inside .table2_27 thead .T127_c1 {
+          width: 4%;
+          text-align: center; }
+        .T27_wrapper .T27_inside .table2_27 thead .T127_c2 {
+          width: 8%;
+          text-align: center;
+          font-weight: normal !important; }
+        .T27_wrapper .T27_inside .table2_27 thead .T127_c3 {
+          width: 36%;
+          font-weight: normal !important;
+          text-align: left !important;
+          padding-left: 1.6%; }
+        .T27_wrapper .T27_inside .table2_27 thead .T127_c4 {
+          width: 42%;
+          font-weight: normal !important;
+          text-align: left !important;
+          padding-left: 3.05%; }
+      .T27_wrapper .T27_inside .table2_27 tbody td {
+        border: 1px solid #dce0ed;
+        height: 2.5em; }
+      .T27_wrapper .T27_inside .table2_27 tr:hover {
+        background-color: #f6f8fe; }
+      .T27_wrapper .T27_inside .table2_27 tbody > tr > td:first-child {
+        text-align: center;
+        font-size: 0.8em;
+        font-weight: 600; }
+      .T27_wrapper .T27_inside .table2_27 tbody > tr > td:first-child + td {
+        text-align: center;
+        font-size: 0.8em; }
+      .T27_wrapper .T27_inside .table2_27 tbody > tr > td:first-child + td + td {
+        padding-left: 1.5%;
+        font-size: 0.8em; }
+      .T27_wrapper .T27_inside .table2_27 tbody > tr > td:first-child + td + td + td {
+        padding-left: 3%;
+        font-size: 0.8em; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr1 {
+        font-weight: normal !important;
+        text-align: left !important;
+        padding-left: 3%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr2 {
+        font-weight: normal !important;
+        text-align: left !important;
+        padding-left: 3.1%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr3 {
+        text-align: left !important;
+        padding-left: 1.46%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr4 {
+        text-align: left !important;
+        padding-left: 1.46%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr5 {
+        text-align: left !important;
+        padding-left: 1.46%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr6 {
+        text-align: left !important;
+        padding-left: 1.46%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr7 {
+        text-align: left !important;
+        padding-left: 1.46%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr8 {
+        text-align: left !important;
+        padding-left: 1.46%; }
+      .T27_wrapper .T27_inside .table2_27 .T127_nr9 {
+        text-align: left !important;
+        padding-left: 3% !important; }
+  .T27_wrapper .T27_inside-1::-webkit-scrollbar {
+    width: 5px;
+    height: 100%; }
+  .T27_wrapper .T27_inside-1::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #e5e8f2; }
+  .T27_wrapper .T27_inside-1::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background: #f6f8fe; }

@@ -1,0 +1,22 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+
+/**
+ * @Author: ${author}
+ * @Description: $!{table.comment} Service 接口
+ * @Date: Create in ${date}
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+        /**
+       *  新增$!{table.comment}
+       * @param bean
+       * @return
+       */
+        ResponseMsg<${entity}> add${entity}Info(${entity} bean);
+}
+#end

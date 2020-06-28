@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统管理-用户管理</title>
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.4/layui/css/layui.css}">
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <script th:src="@{/js/main15.js}"></script>
+    <link rel="stylesheet" th:href="@{/font/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/css/config15.css}">
+    <link rel="stylesheet" th:href="@{/css/style15.css}">
+</head>
+<body>
+    <div class="s-module-name">
+        <i class="iconfont L521_icolor">&#xe640;</i>
+        <span>系统管理</span>
+        <img th:src="@{/images/icon-title-right.png}">
+        <a th:href="@{/shmUsers/getShmUsersList}"><span>用户管理</span></a>
+    </div>
+    <div class="s-search-row">
+        <form class="layui-form">
+            <div class="s-search-item intelligence-search">
+                <input type="text" id="name_id" class="s-input-def" placeholder="请输入姓名或者警号" autocomplete="off">
+                <ul></ul>
+            </div>
+            <div class="s-search-item">
+                <span>部门:</span>
+                <div class="s-search-inputBox">
+                    <select name="interest" lay-filter="department">
+                        <option value="-1">请选择</option>
+                        <option th:each="dept:${ltShmDepartment}" th:value="${dept.id}" th:text="${dept.name}">花桥派出所</option>
+                    </select>
+                </div>
+            </div>
+            <div class="s-search-item">
+                <span>角色:</span>
+                <div class="s-search-inputBox">
+                    <select name="interest" lay-filter="role">
+                        <option value="-1">请选择</option>
+                        <option th:each="role:${ltShmRole}" th:value="${role.id}" th:text="${role.name}">管理员</option>
+                    </select>
+                </div>
+            </div>
+            <div class="s-search-item">
+                <span>状态:</span>
+                <div class="s-search-inputBox">
+                    <select name="interest" lay-filter="state">
+                        <option value="-1">请选择</option>
+                        <option value="0">停用</option>
+                        <option value="1">启用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="s-search-item s-search-send">
+                <a class="s-filter-btn s-btn">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="s-list">
+        <div class="s-list-action">
+            <a class="s-reset-all s-btn s-btn-warm" auth:check="resetPassword">重置密码</a>
+            <a class="s-add-user s-btn" auth:check="userAdd">新增</a>
+        </div>
+        <div id="s_user" class="s-list-table">
+            <table class="layui-hide" id="s_userList" lay-filter="s_userList"></table>
+        </div>
+    </div>
+    <div id="s-alert-data" class="layui-form" lay-filter="add-user" style="display:none;">
+        <table>
+            <tr>
+                <td class="s-table-key" style="width:108px;"><i>*</i>用户名 :</td>
+                <td class="s-table-val"><input type="text" id="username" class="s-input-def" autocomplete="off" maxlength="10" onKeyDown="if(this.value.length>10){event.returnValue=false}"></td>
+            </tr>
+            <tr>
+                <td class="s-table-key"><i>*</i>姓名 :</td>
+                <td class="s-table-val"><input type="text" id="name" class="s-input-def" autocomplete="off" maxlength="20" onKeyDown="if(this.value.length>20){event.returnValue=false}"></td>
+            </tr>
+            <tr>
+                <td class="s-table-key">身份证号 :</td>
+                <td class="s-table-val"><input type="text" id="idCard" class="s-input-def" autocomplete="off" maxlength="20" onKeyDown="if(this.value.length>20){event.returnValue=false}"></td>
+            </tr>
+            <tr>
+                <td class="s-table-key"><i>*</i>警号 :</td>
+                <td class="s-table-val"><input type="text" id="policeId" class="s-input-def" autocomplete="off" maxlength="6" onKeyDown="if(this.value.length>6){event.returnValue=false}"></td>
+            </tr>
+            <tr>
+                <td class="s-table-key"><i>*</i>部门 :</td>
+                <td class="s-table-val">
+                    <select name="add-department" lay-filter="add-department">
+                        <option value="">请选择</option>
+                        <option th:each="dept:${ltShmDepartment}" th:value="${dept.id}" th:text="${dept.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="s-table-key"><i>*</i>角色 :</td>
+                <td class="s-table-val">
+                    <select name="add-role" lay-filter="add-role">
+                        <option value="">请选择</option>
+                        <option th:each="role:${ltShmRole}" th:value="${role.id}" th:text="${role.name}">管理员</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="s-table-key"><i>*</i>数据权限 :</td>
+                <td class="s-table-val">
+                    <select name="add-dataPri" lay-filter="add-dataPri">
+                        <option value="">请选择</option>
+                        <option value="1">个人</option>
+                        <option value="2">单位</option>
+                        <option value="3">全市</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="s-table-key">状态 :</td>
+                <td class="s-table-val">
+                    <input type="radio" class="add-state" name="add-state" lay-filter="add-state" value="1" title="启用" checked>
+                    <input type="radio" class="add-state" name="add-state" lay-filter="add-state" value="0" title="停用">
+                </td>
+            </tr>
+        </table>
+        <div class="s-alert-action">
+            <a class="s-alert-send s-btn">提交</a>
+            <a class="s-alert-close s-btn s-btn-white">取消</a>
+        </div>
+    </div>
+</body>
+<script th:src="@{/web/system/user/user.js}"></script>
+<!--表格状态字段颜色区别判断 Start-->
+<script type="text/html" id="userState">
+    {{#  if(d.stateName === '启用'){ }}
+    <span style="color:green">{{d.stateName}}</span>
+    {{#  } else { }}
+    <span style="color:red">{{d.stateName}}</span>
+    {{#  } }}
+</script>
+<!--表格状态字段颜色区别判断 End-->
+<!--用户操作列权限设置 Start-->
+<script type="text/html" id="typeOperate">
+    <a class="s-btn-table" data-tips="编辑" lay-event="edit" auth:check="userEdit"><i class="iconfont">&#xe641;</i></a>
+    <a class="s-btn-table" data-tips="删除" lay-event="del" auth:check="userDel"><i class="iconfont">&#xe63e;</i></a>
+    <a class="s-btn-table" data-tips="重置密码" lay-event="reset" auth:check="resetPassword"><i class="iconfont">&#xe63a;</i></a>
+</script>
+<!--用户操作列权限设置 End-->
+<script th:inline="javascript">
+    //var value=[[${ltXq}]];
+    //调用获取警员警号方法
+    getPoliceIdAndName();
+</script>
+</html>

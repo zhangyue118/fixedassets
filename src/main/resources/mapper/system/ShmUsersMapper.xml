@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netintech.fixedassets.system.mapper.ShmUsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.netintech.fixedassets.system.entity.ShmUsers">
+        <id column="ID" property="id" />
+        <result column="department_id" property="departmentId" />
+        <result column="role_id" property="roleId" />
+        <result column="name" property="name" />
+        <result column="police_id" property="policeId" />
+        <result column="login_name" property="loginName" />
+        <result column="login_pwd" property="loginPwd" />
+        <result column="create_time" property="createTime" />
+        <result column="creater" property="creater" />
+        <result column="update_time" property="updateTime" />
+        <result column="updater" property="updater" />
+        <result column="cardno" property="cardno" />
+        <result column="data_pri" property="dataPri" />
+        <result column="state" property="state" />
+        <result column="is_delete" property="isDelete" />
+        <result column="delete_token" property="deleteToken" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, department_id, role_id, name, police_id, login_name, login_pwd, create_time, creater, update_time, updater, cardno, data_pri, state, is_delete, delete_token
+    </sql>
+
+    <select id="getCountByMapAndPage" resultType="java.lang.Integer" parameterType="map">
+        select count(1) from shm_users
+        where is_delete=0
+        <if test="name!=null and name!=''">
+            and (name like '%${name}%' or police_id=#{name})
+        </if>
+        <if test="departmentId!=null and departmentId!=-1">
+            and department_id=#{departmentId}
+        </if>
+        <if test="roleId!=null and roleId!=-1">
+            and role_id=#{roleId}
+        </if>
+        <if test="state!=null and roleId!=-1">
+            and state=#{state}
+        </if>
+    </select>
+
+    <select id="getListByMapAndPage" resultType="com.netintech.fixedassets.system.dto.ShmUsersDto" parameterType="map">
+        select u.ID, d.name departmentName, r.name roleName, u.name,u.cardno,u.department_id,u.state,u.role_id,u.data_pri, u.police_id, u.login_name,u.update_time,case u.state when '0' THEN '停用' ELSE '启用' end as stateName from shm_users u
+        left join shm_department d on u.department_id=d.ID
+        left join shm_role r on r.ID=u.role_id
+        where u.is_delete=0
+        <if test="name!=null and name!=''">
+            and (u.name like '%${name}%' or police_id=#{name})
+        </if>
+        <if test="departmentId!=null and departmentId!=-1">
+            and department_id=#{departmentId}
+        </if>
+        <if test="roleId!=null and roleId!=-1">
+            and role_id=#{roleId}
+        </if>
+        <if test="state!=null and state!=-1">
+            and state=#{state}
+        </if>
+        order by u.update_time desc
+        LIMIT #{start},#{end}
+    </select>
+
+    <select id="getPoliceIdAndName" resultType="java.util.Map">
+        select u.name,u.police_id policeId from shm_users u where u.is_delete=0
+    </select>
+
+    <update id="updateDeptById" parameterType="map">
+        update shm_users set department_id=#{newdeptId},updater=#{updater},update_time=#{updateTime} where id=#{userId}
+    </update>
+
+</mapper>

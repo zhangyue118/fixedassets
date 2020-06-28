@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<title>社会面上报错误提示的界面</title>
+<style type="text/css">
+    body, html, div, p, span, h3, ol, ul, li {
+        margin: 0;
+        padding: 0;
+    }
+
+    ol, ul, li {
+        list-style: none;
+    }
+
+    body, html {
+        height: 100%;
+    }
+
+    .main {
+        width: 100%;
+        height: 100%;
+        background: #FFF;
+        font-family: "微软雅黑", "宋体";
+    }
+
+    .con {
+        width: 565px;
+        *width: 568px;
+        margin: 0 auto;
+    }
+
+    .result {
+        background: #5287f8;
+        padding: 80px 0 80px;
+    }
+
+    .result h1 {
+        width: 100%;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        font-size: 80px;
+        color: #ffbe43;
+        font-weight: bold;
+    }
+
+    .result h3 {
+        width: 100%;
+        border-bottom: 1px solid #fff;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        font-size: 33px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .result div {
+        color: #e8e8e8;
+    }
+
+    .result p {
+        font-size: 25px;
+    }
+
+    .result ol {
+        padding-left: 25px;
+        *padding-left: 28px;
+    }
+
+    .result ol li {
+        list-style: decimal;
+        font-size: 20px;
+    }
+
+    .explain {
+        background: #e2e2e2;
+        color: #666;
+        font-size: 12px;
+        padding: 20px 0;
+    }
+
+    .explain .info2 {
+        margin-top: 15px;
+    }
+
+    .explain .info2 p {
+        font-weight: bold;
+    }
+
+    .explain .info2 ul {
+        padding-left: 15px;
+    }
+
+    .explain .info2 li {
+        list-style: disc;
+    }
+
+    .tel {
+        padding: 20px 0;
+        color: #666;
+    }
+
+    .tel p {
+        font-size: 16px;
+    }
+
+    .foodercon {
+        width: 565px;
+        *width: 568px;
+        margin: 20px auto 10px;
+    }
+</style>
+</head>
+<body>
+<div class="main">
+    <div class="result">
+        <div class="con">
+            <!--<h1 th:text="${data['status']}"></h1>-->
+            <!--<h3 th:text="${data['message']}"></h3>-->
+            <div>
+                <p>这可能是因为：</p>
+                <ol>
+                    <li>您已输入的网址不正确，或您要找的网页可能已被更新或删除</li>
+                    <li>您访问的网站参数错误或者丢失</li>
+                    <li>您可以进行如下操作：<a href="javascript:goLogin()">返回首页</a>
+                        <a href="javascript:history.go(-1);">返回上页</a>
+                        <a href="javascript:window.opener=null;window.open('','_self');window.close();">关闭</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="explain">
+        <div class="con">
+            <div class="info1">
+                <p>您看到这个页面有可能是我们网站原因或者是网络原因造成的，为此我们感到非常抱歉。</p>
+                <p>如果你急需联系我们或者咨询相关的信息。可以直接致电我们或者发送邮件给我们，我们会在看到的第一时间处理和给您回复。</p>
+            </div>
+            <div class="info2">
+                <p>如果网站因因为频繁访问或者是刷新原因导致页面被禁止访问：</p>
+                <ul>
+                    <li>请稍等片刻在继续访问。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tel">
+        <div class="con">
+            <!--<p>服务热线：021-66039988 咨询QQ：800005846 <br/>电子信箱：Service@netmarch.com</p>-->
+        </div>
+        <div class="foodercon">江苏网进【
+            <script>
+                var myDate = new Date();
+                document.write(myDate.getFullYear()+"年"+(myDate.getMonth()+1)+"月"+myDate.getDate()+"日");
+            </script>
+            】敬上
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function goLogin() {
+        top.location.href = "/";
+    }
+</script>
+</html>

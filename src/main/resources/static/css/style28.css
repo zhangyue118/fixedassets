@@ -1,0 +1,194 @@
+.SL128_Wrapper {
+  width: 100%;
+  height: 100%;
+  min-width: 1280px;
+  min-height: 750px;
+  background: url("/images/newLogin/L128_bg.png") no-repeat;
+  background-size: 100% 100%;
+  position: relative; }
+.SL128_Wrapper .SL128_circle {
+  width: 73%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 13%;
+  background: url("/images/newLogin/L128_circle.png") no-repeat;
+  background-size: 100% 100%; }
+.SL128_Wrapper .SL128_circle .Sl128_top {
+  height: 24%;
+  width: 100%;
+  position: absolute; }
+.SL128_Wrapper .SL128_circle .Sl128_top .SL128_title {
+  width: 45.4em;
+  height: 9.2em;
+  background: url("/images/newLogin/L128_logo.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -4.6em;
+  margin-left: -22.7em; }
+.SL128_Wrapper .SL128_circle1 {
+  width: 70%;
+  position: absolute;
+  top: 0;
+  bottom: 23%;
+  left: 12.3%;
+  background: url("/images/newLogin/circle2.png") no-repeat;
+  background-size: 100% 100%; }
+.SL128_Wrapper .SL128_circle1 > .SL128_circle1img {
+  width: 27.7em;
+  height: 27.6em;
+  position: absolute;
+  top: 31%;
+  left: 35.5%; }
+.SL128_Wrapper .SL128_circle1 > .SL128_circle1img > img {
+  width: 100%;
+  height: 100%; }
+.SL128_Wrapper .SL128_login {
+  width: 37.1em;
+  height: 24em;
+  background: url("/images/newLogin/L128_loginbg.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -12em;
+  margin-left: -18.55em; }
+.SL128_Wrapper .SL128_login .SL128_huanyin {
+  position: absolute;
+  top: .5em;
+  left: 0;
+  right: 0;
+  height: 2.6em;
+  line-height: 2.6em;
+  font-family: PingFangSC-Regular;
+  font-size: 1.5em;
+  color: #ffffff;
+  text-align: center; }
+.SL128_Wrapper .SL128_login .SL128_top {
+  width: 18em;
+  height: 7em;
+  margin: 6.6em auto;
+  position: relative; }
+.SL128_Wrapper .SL128_login .SL128_top > .SL128_shuru {
+  width: 100%;
+  height: 2.2em;
+  background: url("/images/newLogin/L128_div3.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute; }
+.SL128_Wrapper .SL128_login .SL128_top > .SL128_shuru .SL128_img {
+  width: 2.5em;
+  height: 2.2em;
+  position: relative; }
+.SL128_Wrapper .SL128_login .SL128_top > .SL128_shuru .SL128_img img {
+  width: 1.3em;
+  height: 1.3em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.65em;
+  margin-left: -0.65em; }
+.SL128_Wrapper .SL128_login .SL128_top > .SL128_shuru .SL128_input {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 3.5em; }
+.SL128_Wrapper .SL128_login .SL128_top > .SL128_shuru .SL128_input input {
+  width: 100%;
+  height: 100%;
+  background: none;
+  color: #fff;
+  font-size: .8em; }
+.SL128_Wrapper .SL128_login .SL128_top .SL128_shuru1 {
+  top: 0; }
+.SL128_Wrapper .SL128_login .SL128_top .SL128_shuru2 {
+  top: 2.9em; }
+.SL128_Wrapper .SL128_login .SL128_top .SL128_jizhu {
+  width: 100%;
+  height: 1.8em;
+  line-height: 1.8em;
+  position: absolute;
+  bottom: 0;
+  right: 0; }
+.SL128_Wrapper .SL128_login .SL128_top .SL128_jizhu > .SL128_check {
+  width: 16px;
+  height: 16px;
+  background-color: #102789;
+  border: solid 1px #4c79ff;
+  position: absolute;
+  top: 50%;
+  right: 5em;
+  margin-top: -0.45em; }
+.SL128_Wrapper .SL128_login .SL128_top .SL128_jizhu > .SL128_check > input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: none;
+  color: #fff;}
+.SL128_Wrapper .SL128_login .SL128_top .SL128_jizhu > .SL128_check > input:after {
+  position: absolute;
+  width: 10px;
+  height: 16px;
+  top: 0;
+  content: " ";
+  background-color: #102789;
+  color: #fff;
+  display: inline-block;
+  visibility: visible;
+  padding: 0px 3px;
+  border-radius: 3px;}
+.SL128_Wrapper .SL128_login .SL128_top .SL128_jizhu > .SL128_check > input:checked:after {
+  content: "✓";
+  font-size: 14px;}
+.SL128_Wrapper .SL128_login .SL128_top .SL128_jizhu > .SL128_world {
+  font-size: .8em;
+  position: absolute;
+  top: 5%;
+  right: 0;
+  margin-left: 1.75em;
+  color: #fff; }
+.SL128_Wrapper .SL128_login .SL128_top .SL128_jizhu > .SL128_world:hover {
+  color: #23dfe2; }
+.SL128_Wrapper .SL128_login .SL128_bottom {
+  width: 18em;
+  height: 5.55em;
+  position: absolute;
+  left: 50%;
+  margin-left: -9em;
+  bottom: 3.5em;
+  text-align: center; }
+.SL128_Wrapper .SL128_login .SL128_bottom > div {
+  width: 100%;
+  height: 1.8em;
+  line-height: 1.8em;
+  font-size: 1.1em;
+  background-size: 100% 100%;
+  cursor: pointer; }
+.SL128_Wrapper .SL128_login .SL128_bottom .SL128_loginDiv1 {
+  background: url("/images/newLogin/L128_div1.png") no-repeat;
+  color: #fff; }
+.SL128_Wrapper .SL128_login .SL128_bottom .SL128_loginDiv2 {
+  background: url("/images/newLogin/L128_div2.png") no-repeat;
+  color: #23dfe2;
+  position: absolute;
+  bottom: 0; }
+.SL128_Wrapper .ss {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  overflow-x: hidden; }
+.SL128_Wrapper .ss div {
+  width: 200px;
+  height: 100px;
+  background: url("/images/newLogin/L128_icon1.png") repeat-x; }
+.SL128_Wrapper .SL128_floor{
+  color:#fff;
+  text-align:center;
+  padding: 11% 0% 3% 22%;
+  font-size:16px;
+  bottom: 0;
+  position: absolute;
+  margin:100px 0 10px;
+}

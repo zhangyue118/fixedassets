@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>社会面信息上报</title>
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.4/layui/css/layui.css}">
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <!--<script th:src="@{/js/main_All.js}"></script>-->
+    <!--<script th:src="@{/js/PIE.js}"></script>-->
+    <link rel="stylesheet" th:href="@{/css/GUI21.css}">
+    <script th:src="@{/web/index.js}"></script>
+    <link rel="stylesheet" th:href="@{/font/indexIconfont.css}">
+    <link rel="stylesheet" th:href="@{/css/config15.css}">
+    <link rel="stylesheet" th:href="@{/css/style21.css}">
+    <link rel="stylesheet" th:href="@{/css/style15.css}">
+    <script th:src="@{/js/main15.js}"></script>
+</head>
+<body>
+<div id="wapper">
+    <div id="header">
+        <div id="logo">
+            <img th:src="@{/img/I121_1_text.png}" alt="">
+        </div>
+        <div class="stage">
+            <div>
+                <span>欢迎登录系统！</span>
+                <span id="showTime">2019-06-10 10:10:02</span>
+            </div>
+            <div>
+                <i class="iconfont">&#xe60c;</i>
+                <span th:text="${userdeptname}">刑警大队</span>
+            </div>
+            <div>
+                <i class="iconfont">&#xe61f;</i>
+                <span th:text="${user.name}">莫里索</span>
+            </div>
+            <div class="h-icon">
+                <i class="iconfont s-update-pass" data-tips="修改密码">&#xe7d5;</i>
+                <i class="iconfont s-update-dept" data-tips="部门变更">&#xe6bb;</i>
+                <i class="iconfont s-my-msg" data-tips="消息" th:data-userid="${user.id}">&#xe634;<span th:if="${messageCount>0}" th:text="${messageCount}"></span></i>
+                <i class="iconfont" data-tips="退出" th:onclick="'javascript:logout()'">&#xe715;</i>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="side-nav">
+            <div class="side-nav-menu">
+                <div class="menu-item" th:each="shmMenuDto : ${ltShmMenuDto}">
+                    <div class='menu-item-icon'>
+                        <i class="iconfont" th:utext="${shmMenuDto.menuicon}">&#xe610;</i>
+                    </div>
+                    <div class="menu-item-title" onclick="jumpNew(this.getAttribute('data-id'),this.getAttribute('data-url'))" th:data-url="${shmMenuDto.url}" th:data-id="${shmMenuDto.id}">
+                        <span th:text="${shmMenuDto.menu}">系统首页</span>
+                    </div>
+                    <ul class="menu-item-popup">
+                        <li th:each="shmMenu : ${shmMenuDto.sonMenus}" onclick="jumpNew(this.getAttribute('data-id'),this.getAttribute('data-url'))" th:data-url="${shmMenu.url}" th:data-id="${shmMenu.id}">
+                            <i class="iconfont">&#xe628;</i>
+                            <span th:text="${shmMenu.menu}">数据上报</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="s-slide-btn s-tac">
+                <i class="iconfont icondouble-arrow-left"></i>
+            </div>
+        </div>
+        <div class="s-content">
+            <iframe src="home" frameborder="0" name="indexContentIframe" id="indexContentIframe"></iframe>
+            <!-- <iframe src="home.html" frameborder="0"></iframe> -->
+        </div>
+    </div>
+    <div class="L421_popup_black">
+    </div>
+
+    <div class="L421_popup">
+        <div class="L421_pp_title">
+            <span>新增字段</span>
+            <i class="iconfont" onclick="callParentHide()">&#xe602;</i>
+        </div>
+        <div class="L421_pp_content">
+            <div class="L421_pp_inline L421_pp_t">
+                <label class="L421_label_inline" for="L421_label">标签：</label>
+                <input type="text" id="L421_label">
+            </div>
+            <div class="L421_pp_inline L421_pp_t">
+                <label class="L421_label_inline L421_4" for="L421_form">输入形式：</label>
+                <input type="text" id="L421_form">
+            </div>
+            <div class="L421_pp_inline L421_pp_checkbox">
+                <input type="checkbox" id="L421_open">
+                <label for="L421_open">启用</label>
+            </div>
+            <div class="L421_pp_inline  L421_pp_checkbox">
+                <input type="checkbox" id="L421_empty">
+                <label for="L421_empty">不为空</label>
+            </div>
+            <div class="L421_pp_inline  L421_pp_checkbox">
+                <input type="checkbox" id="L421_show">
+                <label for="L421_show">在查询结果列表显示</label>
+            </div>
+        </div>
+        <div class="L421_pp_footer">
+            <span class="G-button G-button-blue">保存</span>
+            <span class="G-button G-button-empty" id="I121_clear" onclick="callParentHide()">取消</span>
+        </div>
+    </div>
+    <div th:replace="common/bottom::pages"></div>
+
+</div>
+
+</body>
+<script th:inline="javascript">
+
+    var url=[[${url}]];
+    var menuId=[[${menuId}]];
+
+    $(document).ready(function () {
+        main15.index();
+        jumpNew(menuId,url);
+    });
+    function callParentHide(){
+        $(".L421_popup_black").hide()
+        $(".L421_popup").hide()
+    }
+    function ppShow(){
+        $(".L421_popup_black").show()
+        $(".L421_popup").show()
+    }
+
+    layui.use('layer',function () {
+        var layer = layui.layer;
+        var tips;
+        $("body").on('mouseenter','.h-icon i',function () {
+            tips = layer.tips($(this).data('tips'), $(this), {
+                tips: [1,'#333333']
+            });
+        }).on('mouseleave','.h-icon i',function () {
+            layer.close(tips)
+        });
+    })
+
+</script>
+
+</html>

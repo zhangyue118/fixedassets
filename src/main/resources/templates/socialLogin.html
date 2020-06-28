@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>社会面登陆</title>
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <script th:src="@{/js/jquery.backgroundSize.js}"></script>
+    <script th:src="@{/js/jqueryrotate.js}"></script>
+    <script th:src="@{/js/main_All.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/style28.css}">
+    <script th:src="@{/js/script21.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.cookie.min.js}" charset="UTF-8"></script>
+    <script th:src="@{/js/base64.js}"></script>
+    <script th:src="@{/js/verification.js}"></script>
+    <script th:src="@{/js/md5.js}"></script>
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <script th:src="@{/web/login.js}"></script>
+</head>
+<body>
+    <div class="SL128_Wrapper">
+        <div class="SL128_circle">
+            <div class="Sl128_top">
+                <div class="SL128_title"></div>
+            </div>
+        </div>
+        <div class="SL128_circle1">
+            <div  class="SL128_circle1img">
+                <!-- <img src="./images/L128_circle2.png" alt="" id="xuanzhuan"> -->
+            </div>
+        </div>
+        <div class="SL128_login">
+            <div class="SL128_huanyin">欢迎登录</div>
+            <div class="SL128_top">
+                <div class="SL128_shuru1 SL128_shuru">
+                    <div class="SL128_img">
+                        <img src="/images/newLogin/L128_icon2.png" alt="">
+                    </div>
+                    <div class="SL128_input"> <input type="text" name="loginName" id="loginName"></div>
+                </div>
+                <div class="SL128_shuru2 SL128_shuru">
+                    <div class="SL128_img">
+                        <img src="/images/newLogin/L128_icon1.png" alt="">
+                    </div>
+                    <div class="SL128_input"> <input type="password"autocomplete="new-password" name="loginPwd" id="loginPwd"></div>
+                </div>
+                <div class="SL128_jizhu">
+                    <div class="SL128_check">
+                      <input type="checkbox" id="if_save">
+                    </div>
+                    <div class="SL128_world"><label for="if_save">记住密码</label></div>
+                </div>
+            </div>
+            <div class="SL128_bottom">
+                <div class="SL128_loginDiv1"  id="`submitButton`" th:onclick="|onlogin()|">登录</div>
+                <div class="SL128_loginDiv2" autocomplete="new-password" th:onclick="|onCaLogin()|" >数字证书登录</div>
+            </div>
+        </div>
+        <div class="SL128_floor">
+            <p>昆山市公安局@2019  服务支持:江苏网进科技股份有限公司 | 推荐使用1440*900以上分辨率 | <a style="color: white;" th:href="@{/download/Chrome_49.0.2623.87.exe}" class="down">谷歌浏览器WindowsXP点击下载</a>
+                <a style="color: white;" th:href="@{/download/77.0.3865.120_chrome_installer_32.exe}" class="down">Windows7、8、10点击下载</a></p>
+        </div>
+    </div>
+
+</body>
+<script th:inline="javascript">
+    /*count连续登录错误次数*/
+    function countRead(){
+        var count = $.cookie("count");
+        if (count == null || count == undefined || count == 'undefined' || count == 'null') {
+            $.cookie("count", 0);  //将结束时间保存到cookie
+        }else{
+            $.cookie("count", ++count);
+        }
+        count = $.cookie("count");
+        return count;
+
+    }
+
+    /*计时 start*/
+
+    $(function(){
+        cookieRead();
+        //RememberPass();
+    })
+
+    /*读取cookie*/
+    function cookieRead(){
+        if ($.cookie("djsendtime") != undefined && !isNaN($.cookie("djsendtime"))) {  //读取到了cookie值
+            var djsendtime = $.cookie("djsendtime");
+            var now = new Date().getTime();  //当前时间戳
+            var locksecends = parseInt((djsendtime - now) / 1000);
+            if (locksecends <= 0) {
+                $.cookie("djsendtime", null);
+            } else {
+                LockButton('#submitButton', locksecends);
+            }
+        }
+    }
+
+    var LockButton = function (btnObjId, locksecends) {
+        //1.获取当前系统时间
+        //2.获取 locksecends 后的系统时间
+        //3.用cookie保存到期时间
+        //4.每次加载后获取cookie中保存的时间
+        //5.用到期时间减去当前时间获取倒计时
+        var djsendtime = $.cookie("djsendtime");
+        if (djsendtime == null || djsendtime == undefined || djsendtime == 'undefined' || djsendtime == 'null') {
+            var now = new Date().getTime();  //当前时间戳
+            var endtime = locksecends * 1000 + now;  //结束时间戳
+            $.cookie("djsendtime", endtime);  //将结束时间保存到cookie
+        }
+        $(btnObjId).removeAttr("onclick");
+        $(btnObjId).find('.submit-btn').val("("+locksecends+")秒后重新登录");
+
+        var timer = setInterval(function () {
+            locksecends--;
+            $(btnObjId).find('.submit-btn').val("("+locksecends+")秒后重新登录");
+            if (locksecends <= 0) {
+                //倒计时结束清除cookie值
+                $.cookie("djsendtime", null);
+                $(btnObjId).attr("onclick","onlogin();");
+                $('.submit-btn').val("登录");
+                clearInterval(timer);
+            }
+        }, 1000);
+    };
+    /*计时 end*/
+</script>
+<script>
+    $(function(){
+        $("#loginName").focus();
+    });
+    /**
+     * 回车触发登录
+     * @param e
+     */
+    document.onkeydown = function (e) {
+        // 兼容FF和IE和Opera
+        var theEvent = window.event || e;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            onlogin();
+        }
+    }
+    var rotateVal=0;
+    var interVal;
+    $(window).ready(function(){
+        $(".SL128_Wrapper").css("backgroundSize", "100% 100%");
+        $(".SL128_title").css("backgroundSize", "100% 100%");
+        $(".SL128_login").css("backgroundSize", "100% 100%");
+        $(".SL128_shuru1").css("backgroundSize", "100% 100%");
+        $(".SL128_shuru2").css("backgroundSize", "100% 100%");
+        $(".SL128_circle").css("backgroundSize", "100% 100%");
+        $(".SL128_circle1").css("backgroundSize", "100% 100%");
+        $(".SL128_loginDiv1").css("backgroundSize", "100% 100%");
+        $(".SL128_loginDiv2").css("backgroundSize", "100% 100%");
+        // setInterval(function(){
+        // rotateVal+=1;
+        //     $("#xuanzhuan").rotate(rotateVal);
+        // },100)
+    })
+    $(function(){    
+   
+    
+ 
+    $(".SL128_loginDiv2").hover(function(){
+        $('.SL128_loginDiv2').css('background-image',"url(/images/newLogin/L128_div1.png)");
+        $('.SL128_loginDiv2').css('color',"#fff");
+    },function(){
+        $('.SL128_loginDiv2').css('background-image',"url(/images/newLogin/L128_div2.png)");
+        $('.SL128_loginDiv2').css('color',"#23dfe2");
+        
+    })
+    $(".SL128_login").hover(function(){
+        $('.SL128_Wrapper').css('background-image',"url(/images/newLogin/L128_faguan.png)");
+    },function(){
+        $('.SL128_Wrapper').css('background-image',"url(/images/newLogin/L128_bg.png)");
+       
+        
+  
+        
+    })
+    
+});
+
+</script>
+</html>

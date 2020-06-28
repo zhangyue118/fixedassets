@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统管理-部门变更</title>
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.4/layui/css/layui.css}">
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <script th:src="@{/js/main15.js}"></script>
+    <link rel="stylesheet" th:href="@{/font/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/css/config15.css}">
+    <link rel="stylesheet" th:href="@{/css/style15.css}">
+</head>
+<body>
+    <div class="s-module-name">
+        <i class="iconfont L521_icolor">&#xe640;</i>
+        <span>系统管理</span>
+        <img th:src="@{/images/icon-title-right.png}">
+        <a th:href="@{/shmDeptchangeinfo/toShmDeptchangeinfoList}"><span>我的变更</span></a>
+    </div>
+    <div class="s-search-row">
+    </div>
+    <div class="s-list">
+        <div id="s_form" class="s-list-table">
+            <table class="layui-hide" id="s_formList" lay-filter="s_formList"></table>
+        </div>
+    </div>
+
+</body>
+<script th:src="@{/web/system/deptChange/deptChange.js}"></script>
+</html>

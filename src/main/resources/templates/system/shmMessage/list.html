@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统管理-通知通告</title>
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.4/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/font/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/wangEditor/css/wangEditor.css}">
+    <link rel="stylesheet" th:href="@{/css/config15.css}">
+    <link rel="stylesheet" th:href="@{/css/style15.css}">
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <script th:src="@{/js/main15.js}"></script>
+</head>
+<body>
+    <div class="s-module-name">
+        <i class="iconfont L521_icolor">&#xe640;</i>
+        <span>系统管理</span>
+        <img th:src="@{/images/icon-title-right.png}">
+        <a th:href="@{/shmMessage/getShmMessageList}"><span>通知通告</span></a>
+    </div>
+    <div class="s-search-row">
+        <form class="layui-form">
+            <div class="s-search-item">
+                <input type="text" id="messageTitle" class="s-input-def" placeholder="请输入标题关键字" autocomplete="off">
+            </div>
+            <div class="s-search-item s-search-send">
+                <a class="s-filter-btn s-btn">查询</a>
+            </div>
+        </form>
+    </div>
+    <div class="s-list">
+        <div class="s-list-action">
+            <a class="s-add-type s-btn" auth:check="messageAdd">新增</a>
+        </div>
+        <div id="s_message" class="s-list-table">
+            <table class="layui-hide" id="s_messageList" lay-filter="s_messageList"></table>
+        </div>
+    </div>
+    <div id="s-alert-data" class="s-alert-editor" lay-filter="add-type" style="display:none;">
+        <table>
+            <tr class="s-table-editor">
+                <td class="s-table-key" style="width:56px;"><i>*</i>标题 :</td>
+                <td class="s-table-val"><input type="text" id="addMsgTitle" class="s-input-def" autocomplete="off" maxlength="200" onKeyDown="if(this.value.length>200){event.returnValue=false}"></td>
+            </tr>
+        </table>
+        <div id="s_editor" class="s-editor" style="height:200px;"></div>
+        <div class="s-alert-action">
+            <a class="s-alert-send s-btn">提交</a>
+            <a class="s-alert-close s-btn s-btn-white">取消</a>
+        </div>
+    </div>
+</body>
+<!--用户操作列权限设置 Start-->
+<script type="text/html" id="typeOperate">
+    <a class="s-btn-table" data-tips="编辑" lay-event="edit" auth:check="messageEdit"><i class="iconfont">&#xe641;</i></a>
+    <a class="s-btn-table" data-tips="删除" lay-event="del" auth:check="messageDel"><i class="iconfont">&#xe63e;</i></a>
+</script>
+<!--用户操作列权限设置 End-->
+<script th:src="@{/wangEditor/js/wangEditor.js}"></script>
+<script th:src="@{/web/system/message/message.js}"></script>
+<!--消息富文本框 Start-->
+<script>
+    var E = window.wangEditor;
+    var editor = new E('s_editor');
+    // 上传图片
+    editor.config.uploadImgUrl = '/upload';
+    // 隐藏网络图片
+    editor.config.hideLinkImg = true;
+    editor.create()
+</script>
+<!--消息富文本框 End-->
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netintech.fixedassets.system.mapper.ShmMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.netintech.fixedassets.system.entity.ShmMenu">
+        <id column="ID" property="id" />
+        <result column="menu" property="menu" />
+        <result column="parent_menu" property="parentMenu" />
+        <result column="url" property="url" />
+        <result column="code" property="code" />
+        <result column="seq" property="seq" />
+        <result column="level" property="level" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, menu, parent_menu, url, code, seq, level
+    </sql>
+
+    <!-- 通过权限获取菜单列表 -->
+    <select id="listByRoleId" resultType="com.netintech.fixedassets.system.entity.ShmMenu" parameterType="int">
+        select m.ID,m.menu,m.parent_menu,m.url, m.menuicon from shm_menu m
+        LEFT join shm_action a on m.ID=a.menu_id and a.code='9999'
+        LEFT join shm_role_r_action ra on ra.action_id=a.ID
+        where ra.role_id=#{id}
+        order by m.seq desc
+    </select>
+
+</mapper>

@@ -1,0 +1,245 @@
+package ${package.Controller};
+
+import org.springframework.web.bind.annotation.RequestMapping;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+#else
+import org.springframework.stereotype.Controller;
+import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.web.bind.annotation.RequestBody;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import org.springframework.beans.factory.annotation.Autowired;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${entity}Mapper;
+import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+
+/**
+ * @Author: ${author}
+ * @Description: $!{table.comment}控制器
+ * @Date: Create in  ${date}
+ */
+@Api("$!{table.comment}控制器")
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@Slf4j
+@RequestMapping("/${table.entityPath}")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass}{
+#else
+public class ${table.controllerName}{
+#end
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
+    @Autowired
+    private ${entity}Mapper  ${table.entityPath}Mapper;
+
+ #if(${restControllerStyle})
+    /**
+     *  列表
+     * @param
+     * @param
+     * @return
+     */
+    @ApiOperation(value="查询$!{table.comment}列表", notes="查询$!{table.comment}列表",response = ${entity}.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "current", value = "分页页码", required = false, defaultValue = "1",dataType = "int"),
+            @ApiImplicitParam(paramType = "query", name = "size", value = "分页条数", required = false,defaultValue = "10", dataType = "int"),
+    })
+    @PostMapping("/get${entity}List")
+    public Object get${entity}List(@RequestParam( value = "current",defaultValue = "1",required = false) Integer current,
+                                    @RequestParam( value = "size",defaultValue = "10",required = false) Integer size){
+            Page<${entity}> page = new Page<>(current,size);
+            QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+            IPage<${entity}> pageList = ${table.entityPath}Mapper.selectPage(page,queryWrapper);
+             return ResponseMsgUtil.success(pageList);
+    }
+
+     /**
+    * 执行新增
+    * @param        
+    * @param
+    * @return
+    */
+     @ApiOperation(value="新增$!{table.comment}", notes="新增$!{table.comment}",response = ${entity}.class)
+     @PostMapping("/exAdd")
+     public ResponseMsg<${entity}> exAdd(@Valid @RequestBody  ${entity} bean, BindingResult bindingResult){
+             if (bindingResult.hasErrors()){
+             log.error("【创建$!{table.comment}】参数不正确, bean={}", bean);
+             return ResponseMsgUtil.error(SysReturnCode.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+             }
+             ResponseMsg<${entity}> responseMsg=${table.entityPath}Service.add${entity}Info(bean);
+             return responseMsg;
+             }
+
+     /**
+     * 执行删除
+     * @param
+     * @param
+     * @return
+     */
+     @ApiOperation("删除$!{table.comment}")
+     @ApiImplicitParams({ @ApiImplicitParam(paramType = "query",  name = "ids", value = "多个id用英文逗号分隔", required = true,dataType = "String")})
+     @PostMapping("/exDelete")
+     public ResponseMsg<${entity}> exDelete(@RequestParam(value = "ids",required = true) String ids){
+             List<String> idsList= ParamUtil.stringSplitList(ids);
+             ResponseMsg<${entity}> responseMsg=null;
+             boolean flag=${table.entityPath}Service.removeByIds(idsList);
+             if (flag){
+             responseMsg=ResponseMsgUtil.success(ids);
+             }else{
+             responseMsg=ResponseMsgUtil.error(SysReturnCode.SYSTEM_ERROR);
+             }
+             return responseMsg;
+             }
+
+     /**
+       * 执行修改
+       * @param
+       * @param
+       * @return
+       */
+     @ApiOperation(value="修改$!{table.comment}", notes="修改$!{table.comment}",response = ${entity}.class)
+     @PostMapping("/exEdit")
+     public ResponseMsg<${entity}> exEdit(@Valid @RequestBody ${entity} bean, BindingResult bindingResult){
+             if (bindingResult.hasErrors()){
+             log.error("【修改$!{table.comment}】参数不正确, bean={}", bean);
+             return ResponseMsgUtil.error(SysReturnCode.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+             }
+             ResponseMsg<${entity}> responseMsg=null;
+             boolean flag=${table.entityPath}Service.updateById(bean);
+             if (flag){
+             responseMsg=ResponseMsgUtil.success(bean);
+             }else{
+             responseMsg=ResponseMsgUtil.error(SysReturnCode.SYSTEM_ERROR);
+             }
+             return responseMsg;
+             }
+ #else
+     @ApiOperation(value="查询$!{table.comment}列表", notes="查询$!{table.comment}列表",response = ${entity}.class)
+     @ApiImplicitParams({
+             @ApiImplicitParam(paramType = "query", name = "current", value = "分页页码", required = false, defaultValue = "1",dataType = "int"),
+             @ApiImplicitParam(paramType = "query", name = "size", value = "分页条数", required = false,defaultValue = "10", dataType = "int"),
+             @ApiImplicitParam(paramType = "body", name = "domain", value = "对象", required = false, dataType = "${entity}")
+     })
+     @GetMapping(value="get${entity}List")
+     public String get${entity}List(Model model, Pager pager, ${entity} bean) {
+             Page<${entity}> page = new Page<>(pager.getCurrent(),pager.getSize());
+             QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+             IPage<${entity}> list = ${table.entityPath}Mapper.selectPage(page,queryWrapper);
+             model.addAttribute("list", list);
+             return "${package.ModuleName}/${table.entityPath}/list";
+             }
+
+
+     /**
+      * 跳转新增页面
+      * @param model
+      * @return
+      */
+     @ApiIgnore
+     @RequestMapping(value="${table.entityPath}Add", method = {RequestMethod.GET, RequestMethod.POST})
+     public String ${table.entityPath}Add(Model model) {
+             return "${package.ModuleName}/${table.entityPath}/${table.entityPath}Add";
+             }
+
+     /**
+    * 执行新增
+    * @param
+    * @param
+    * @return
+    */
+     @ApiOperation(value="新增$!{table.comment}", notes="新增$!{table.comment}",response = ${entity}.class)
+     @PostMapping("/exAdd")
+     @ResponseBody
+     public ResponseMsg<${entity}> exAdd(@Valid ${entity} bean, BindingResult bindingResult){
+             if (bindingResult.hasErrors()){
+             log.error("【创建$!{table.comment}】参数不正确, bean={}", bean);
+             return ResponseMsgUtil.error(SysReturnCode.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+             }
+             ResponseMsg<${entity}> responseMsg=${table.entityPath}Service.add${entity}Info(bean);
+             return responseMsg;
+             }
+     /**
+     * 跳至详情页面
+     * @return
+     */
+     @ApiIgnore
+     @RequestMapping(value="${table.entityPath}View", method = {RequestMethod.GET, RequestMethod.POST})
+     public String ${table.entityPath}View(Model model,Integer id) {
+         ${entity} obj = ${table.entityPath}Service.getById(id);
+             model.addAttribute("obj",obj);
+             return "${package.ModuleName}/${table.entityPath}/${table.entityPath}View";
+             }
+
+
+     /**
+      * 跳转修改页面
+      * @param model
+      * @return
+      */
+     @ApiIgnore
+     @RequestMapping(value="${table.entityPath}Edit", method = {RequestMethod.GET, RequestMethod.POST})
+     public String ${table.entityPath}Edit(Model model,Integer id) {
+         ${entity} obj = ${table.entityPath}Service.getById(id);
+             model.addAttribute("obj",obj);
+             return "${package.ModuleName}/${table.entityPath}/${table.entityPath}Edit";
+             }
+     /**
+     * 执行删除
+     * @param
+     * @param
+     * @return
+     */
+     @ApiOperation("删除$!{table.comment}")
+     @ApiImplicitParams({ @ApiImplicitParam(paramType = "query",  name = "ids", value = "多个id用英文逗号分隔", required = true,dataType = "String")})
+     @PostMapping("/exDelete")
+     @ResponseBody
+     public ResponseMsg<${entity}> exDelete(String ids){
+             List<String> idsList= ParamUtil.stringSplitList(ids);
+             ResponseMsg<${entity}> responseMsg=null;
+             boolean flag=${table.entityPath}Service.removeByIds(idsList);
+             if (flag){
+             responseMsg=ResponseMsgUtil.success(ids);
+             }else{
+             responseMsg=ResponseMsgUtil.error(SysReturnCode.SYSTEM_ERROR);
+             }
+             return responseMsg;
+             }
+
+     /**
+       * 执行修改
+       * @param
+       * @param
+       * @return
+       */
+     @ApiOperation(value="修改$!{table.comment}", notes="修改$!{table.comment}",response = ${entity}.class)
+     @PostMapping("/exEdit")
+     @ResponseBody
+     public ResponseMsg<${entity}> exEdit(@Valid ${entity} bean, BindingResult bindingResult){
+             if (bindingResult.hasErrors()){
+             log.error("【修改$!{table.comment}】参数不正确, bean={}", bean);
+             return ResponseMsgUtil.error(SysReturnCode.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+             }
+             ResponseMsg<${entity}> responseMsg=null;
+             boolean flag=${table.entityPath}Service.updateById(bean);
+             if (flag){
+             responseMsg=ResponseMsgUtil.success(bean);
+             }else{
+             responseMsg=ResponseMsgUtil.error(SysReturnCode.SYSTEM_ERROR);
+             }
+             return responseMsg;
+             }
+    #end
+
+}

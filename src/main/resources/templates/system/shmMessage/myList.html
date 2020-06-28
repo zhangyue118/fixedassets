@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:auth="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>通知通告-我的通告</title>
+    <script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.4/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/font/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/css/config15.css}">
+    <link rel="stylesheet" th:href="@{/css/style15.css}">
+    <script th:src="@{/lib/layui-v2.5.4/layui/layui.js}"></script>
+    <script th:src="@{/js/main15.js}"></script>
+    <script th:src="@{/js/wangEditor/wangEditor.min.js}"></script>
+</head>
+<body>
+<div class="s-module-name">
+    <i class="iconfont L521_icolor">&#xe640;</i>
+    <span>通知通告</span>
+    <img th:src="@{/images/icon-title-right.png}">
+    <span>我的通告</span>
+</div>
+<div class="s-search-row">
+    <form class="layui-form">
+        <div class="s-search-item">
+            <input type="text" id="messageTitle" class="s-input-def" placeholder="请输入标题关键字" autocomplete="off">
+        </div>
+        <div class="s-search-item s-search-send">
+            <a class="s-filter-btn s-btn">查询</a>
+        </div>
+    </form>
+</div>
+<div class="s-list">
+    <div id="s_myMsg" class="s-list-table">
+        <table class="layui-hide" id="s_myMsgList" lay-filter="s_myMsgList"></table>
+    </div>
+</div>
+</body>
+<script type="text/html" id="s_myMsg_link">
+    {{#  if(d.isRead == 1){ }}
+        <a class="s-row-link" data-id="{{d.id}}" data-read="{{d.isRead}}">
+            <i class="icon-isRead"></i>
+            <span>
+                {{d.title}}
+            </span>
+        </a>
+    {{#  } else { }}
+        <a class="s-row-link unread" data-id="{{d.id}}" data-read="{{d.isRead}}">
+            <i class="icon-unread"></i>
+            <span>
+                {{d.title}}
+            </span>
+        </a>
+    {{#  } }}
+    </a>
+</script>
+<script th:src="@{/web/system/message/myMessage.js}"></script>
+</html>
